@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024年A1車禍分析網</title>
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css'
+        integrity='sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=='
+        crossorigin='anonymous' />
+    <style>
+        body {
+            min-height: 100vh;
+            background-color: rgb(249, 251, 250);
+        }
+
+        .container {
+            overflow: hidden;
+        }
+
+        .iframe_box {
+            background: #FFFFFF;
+            border: none;
+            border-radius: 9px;
+            transition: box-shadow 500ms;
+            min-height: 400px;
+            cursor: pointer;
+            margin: 5px;
+            width: calc(100% - 10px);
+            border: 1px solid #ccc;
+            height: calc(100% - 10px);
+        }
+
+        .iframe_box:hover {
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
+        }
+
+        .btn {
+            background-color: rgba(249, 251, 250, 0.7);
+            border: 1px solid rgb(136, 147, 151);
+            margin: 0 5px;
+            color: rgb(0, 30, 43);
+            transition: background-color 0.5s, box-shadow 0.5s;
+        }
+
+        .btn:hover {
+            box-shadow: 0 0px 0px 3px rgba(232, 237, 235, 0.5);
+            border: 1px solid rgb(136, 147, 151);
+        }
+
+        .row>* {
+            padding: 0;
+        }
+
+        .map {
+            width: 100%;
+            height: 100vh;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            transition: box-shadow 500ms;
+            cursor: pointer;
+        }
+
+        .map_box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn.active {
+            background-color: rgba(232, 237, 235, 0.7);
+        }
+
+        .navbar {
+            background-color: rgba(249, 251, 250, 0.7);
+            padding: 10px 0;
+            box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+            backdrop-filter: saturate(180%) blur(20px);
+        }
+
+        .navbar-btngroup {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar-btngroup>.btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .title {
+            margin: 0 5px;
+            color: #000;
+            font-size: 1.5rem;
+        }
+
+        .slide-left {
+            animation: slide-left 0.5s forwards;
+        }
+
+        .slide-right {
+            animation: slide-right 0.5s forwards;
+        }
+
+        @keyframes slide-left {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slide-right {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .maptitle {
+            border: 1px solid #ccc;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            border-radius: 9px;
+            margin: unset;
+            margin-bottom: 10px;
+            background: #FFFFFF;
+
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background: #888;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar">
+        <nav class="container p-0">
+            <h1 class="title">2024年A1車禍分析網</h1>
+            <div class="navbar-btngroup">
+                <div class="btn active">儀錶板</div>
+                <div class="btn">地圖</div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container iframe_container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-12">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12"> <iframe class="iframe_box"
+                                    src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=cfb4532d-5ed5-4f87-bf0b-e4dc7efd4e86&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                            </div>
+                            <div class="col-sm-6"> <iframe class="iframe_box"
+                                    src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=a09bc1b3-5aae-4f18-bdd0-5e426a783baa&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                            </div>
+                            <div class="col-sm-6"> <iframe class="iframe_box"
+                                    src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=71c39179-3dce-4d04-897a-eb8fb57c2b18&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-sm-12">
+                    <iframe class="iframe_box"
+                        src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=00658109-caab-4fa8-8187-ae0b310294b2&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <iframe class="iframe_box"
+                        src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=23f002cc-e4f5-4dc4-a84d-1d315303ece5&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <iframe class="iframe_box"
+                        src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=8a7f044c-4617-4b8f-b124-3de1b8d9c32a&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <iframe class="iframe_box"
+                        src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=8ebbfe89-3d84-4861-bd2f-3231389fd1aa&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <iframe class="iframe_box"
+                        src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=a76133dd-c904-4e44-b294-f0a3a70741ef&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <iframe class="iframe_box"
+                        src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=0179e403-4519-4111-a7ec-8fc37cdf03e9&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <iframe class="iframe_box"
+                        src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=46e7d780-f89d-442a-85ec-8d9dfa0674b1&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                </div>
+                <div class="col-sm-12">
+                    <iframe class="iframe_box" height="400px"
+                        src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=ef617fe0-94c8-41eb-912b-e97504561d90&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                </div>
+                <div class="col-sm-12">
+                    <iframe class="iframe_box" style="height: 800px !important"
+                        src="https://charts.mongodb.com/charts-project-0-zafwajv/embed/charts?id=19e4f11a-15a8-4d49-956a-ea268963b43a&maxDataAge=3600&theme=light&autoRefresh=true&attribution=false"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="container map_box p-0">
+            <h1 class="maptitle">死傷車禍位置圖</h1>
+            <iframe src="./test.html" class="map"></iframe>
+        </div>
+    </main>
+
+    <script>
+        document.querySelector('.map_box').style.display = 'none';
+        document.querySelectorAll('.btn').forEach(item => {
+            item.addEventListener('click', function () {
+                document.querySelectorAll('.btn').forEach(item => {
+                    item.classList.remove('active');
+                });
+                this.classList.add('active');
+                if (this.innerText == '地圖') {
+                    document.querySelector('.iframe_container').style.display = 'none';
+                    document.querySelector('.map_box').style.display = 'block';
+                    document.querySelector('.map_box').classList.add('slide-left');
+                } else {
+                    document.querySelector('.map_box').style.display = 'none';
+                    document.querySelector('.iframe_container').style.display = 'block';
+                    document.querySelector('.iframe_container').classList.add('slide-right');
+                }
+                window.scrollTo({
+                    top: 0
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

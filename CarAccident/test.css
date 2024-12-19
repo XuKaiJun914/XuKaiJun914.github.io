@@ -1,0 +1,33 @@
+.custom-icon {
+    background-color: #5b81ba;
+    color:#fff;
+    border-radius: 50% !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid #212529;
+    opacity: 0.5;
+}
+.custom-icon div{
+    margin: 0 !important;
+}
+
+.marker-cluster {
+    background-color: rgba(0, 123, 255, 0.6); 
+    border: 2px solid #007bff; 
+    border-radius: 50%; 
+    color: white; 
+    font-size: 14px; 
+    text-align: center; 
+    line-height: 40px; 
+    width: 40px; 
+    height: 40px;
+}
+
+.leaflet-marker-icon {
+    background-color: transparent;
+    border: 0px solid #000;
+}

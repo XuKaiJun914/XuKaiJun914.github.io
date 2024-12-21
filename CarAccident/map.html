@@ -70,7 +70,7 @@
 
         const markers = L.markerClusterGroup({
             iconCreateFunction: function (cluster) {
-                var size = 20 + cluster.getChildCount() * 1;
+                var size = Math.min(20 + cluster.getChildCount() * 1, 300);
                 return new L.divIcon({
                     html: '<div style="background-color:black; opacity: 0.5; width:' + size + 'px; height:' + size + 'px; border-radius:50%; text-align:center; line-height:' + size + 'px; color:white; font-size:12px;">' + cluster.getChildCount() + '</div>',
                     className: 'marker-cluster',
@@ -78,6 +78,17 @@
                 });
             }
         });
+
+        const city_colors = {};
+
+        function generate_random_color() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
 
         app.logIn(credentials)
             .then(user => {
@@ -118,9 +129,15 @@
                         `;
                         const death = die.死亡 + die.受傷;
 
+                        const city = address.substring(0, 3);
+                        if (!city_colors[city]) {
+                            city_colors[city] = generate_random_color();
+                        }
+                        const city_color = city_colors[city];
+
                         const iconSize = 15 + ((death - 1) * 3);
                         const iconHtml = `
-                            <div class='custom-icon' style="width:${iconSize}px; height:${iconSize}px; background-color:red;">
+                            <div class='custom-icon' style="width:${iconSize}px; height:${iconSize}px; background-color:${city_color};">
                                 ${death}
                             </div>
                         `;

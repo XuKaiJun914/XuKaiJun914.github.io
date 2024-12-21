@@ -1,32 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MongoDB + Leaflet</title>
+    <title>Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
     <style>
-        body { margin: 0; padding: 0; }
-        #map { height: 100vh; width: 100%; }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+
+        .custom-icon {
+            background-color: #5b81ba;
+            color: #fff;
+            border-radius: 50% !important;
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.5;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid #212529;
+            opacity: 0.5;
+        }
+
+        .custom-icon div {
+            margin: 0 !important;
+        }
+
+        .marker-cluster {
+            background-color: rgba(0, 123, 255, 0.6);
+            border: 2px solid #007bff;
+            border-radius: 50%;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            line-height: 40px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .leaflet-marker-icon {
+            background-color: transparent;
+            border: 0px solid #000;
+        }
     </style>
-    <link rel="stylesheet" href="test.css">
 </head>
+
 <body>
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/realm-web@1.6.0/dist/bundle.iife.js"></script>
     <script>
-        const app = new Realm.App({ id: 'data-bxymyak' }); 
+        const app = new Realm.App({ id: 'data-bxymyak' });
         const credentials = Realm.Credentials.anonymous();
 
         const map = L.map('map').setView([25.032, 121.5645], 12);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
 
         const markers = L.markerClusterGroup({
-            iconCreateFunction: function(cluster) {
+            iconCreateFunction: function (cluster) {
                 var size = 20 + cluster.getChildCount() * 1;
                 return new L.divIcon({
                     html: '<div style="background-color:black; opacity: 0.5; width:' + size + 'px; height:' + size + 'px; border-radius:50%; text-align:center; line-height:' + size + 'px; color:white; font-size:12px;">' + cluster.getChildCount() + '</div>',
@@ -41,17 +84,17 @@
                 const mongodb = app.currentUser.mongoClient("CarAccident");
                 const collection = mongodb.db("CarAccident").collection("data");
                 return collection.find(
-                {},  
-                {
-                    "日期": 1,
-                    "時間": 1,
-                    "地點": 1,
-                    "經度": 1,
-                    "緯度": 1,  
-                    "處理單位": 1,
-                    "死傷人數":1,
-                    "_id": 0  
-                });
+                    {},
+                    {
+                        "日期": 1,
+                        "時間": 1,
+                        "地點": 1,
+                        "經度": 1,
+                        "緯度": 1,
+                        "處理單位": 1,
+                        "死傷人數": 1,
+                        "_id": 0
+                    });
             })
             .then(data => {
                 data.forEach(wc => {
@@ -90,10 +133,10 @@
 
                         const marker = L.marker([wc.緯度, wc.經度], { icon: icon })
                             .bindPopup(popupContent)
-                            .on('click', function() {
+                            .on('click', function () {
                                 map.flyTo([wc.緯度, wc.經度], 18);
                             });
-                        
+
                         markers.addLayer(marker);
                     }
                 });
@@ -102,4 +145,5 @@
             .catch(console.error);
     </script>
 </body>
+
 </html>

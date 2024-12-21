@@ -9,9 +9,6 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css'
         integrity='sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=='
         crossorigin='anonymous' />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="2024年A1車禍分析網">
     <meta name="keywords" content="2024年A1車禍分析網">
@@ -27,7 +24,6 @@
     <meta property="og:site_name" content="2024年A1車禍分析網">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="zh_TW">
-    <link rel="stylesheet" href="test.css">
     <style>
         body {
             min-height: 100vh;
@@ -249,13 +245,9 @@
         </div>
         <div class="container map_box p-0">
             <h1 class="maptitle">死傷車禍位置圖</h1>
-            <div id="map" class="map"></div>
+            <iframe src="./map.html" class="map"></iframe>
         </div>
     </main>
-
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/realm-web@1.6.0/dist/bundle.iife.js"></script>
     <script>
         document.querySelector('.map_box').style.display = 'none';
         document.querySelectorAll('.btn').forEach(item => {
@@ -278,84 +270,6 @@
                 });
             });
         });
-        const app = new Realm.App({ id: 'data-bxymyak' }); 
-        const credentials = Realm.Credentials.anonymous();
-
-        const map = L.map('map', { preferCanvas: true }).setView([25.032, 121.5645], 12);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
-
-        const markers = L.markerClusterGroup({
-            iconCreateFunction: function(cluster) {
-                var size = 20 + cluster.getChildCount() * 1;
-                return new L.divIcon({
-                    html: '<div style="background-color:black; opacity: 0.5; width:' + size + 'px; height:' + size + 'px; border-radius:50%; text-align:center; line-height:' + size + 'px; color:white; font-size:12px;">' + cluster.getChildCount() + '</div>',
-                    className: 'marker-cluster',
-                    iconSize: new L.Point(size, size)
-                });
-            }
-        });
-
-        app.logIn(credentials)
-            .then(user => {
-                const mongodb = app.currentUser.mongoClient("CarAccident");
-                const collection = mongodb.db("CarAccident").collection("data");
-                return collection.find(
-                {},  
-                {
-                    "日期": 1,
-                    "時間": 1,
-                    "地點": 1,
-                    "經度": 1,
-                    "緯度": 1,  
-                    "處理單位": 1,
-                    "死傷人數":1,
-                    "_id": 0  
-                });
-            })
-            .then(data => {
-                data.forEach(wc => {
-                    if (wc.經度 && wc.緯度) {
-                        let address = wc.地點[0];
-                        if (wc.地點.length > 1) {
-                            address = wc.地點.join("與") + "交叉路口";
-                        }
-
-                        const date = wc.日期 || "無資料";
-                        const time = wc.時間 || "無資料";
-                        const unit = wc.處理單位 || "無資料";
-                        const die = wc.死傷人數 || { 死亡: 0, 受傷: 0 };
-
-                        const popupContent = `
-                            <strong>日期: ${date}</strong><br>
-                            時間: ${time}<br>
-                            地點: ${address}<br>
-                            處理單位: ${unit}<br>
-                            死傷人數: ${die.死亡} 死亡, ${die.受傷} 受傷
-                        `;
-                        const death = die.死亡 + die.受傷;
-
-                        const iconSize = 15 + ((death - 1) * 3);
-                        const iconHtml = `
-                            <div class='custom-icon' style="width:${iconSize}px; height:${iconSize}px; background-color:red;">
-                                ${death}
-                            </div>
-                        `;
-
-                        const icon = L.divIcon({
-                            html: iconHtml,
-                            className: 'custom-icon',
-                            iconSize: [iconSize, iconSize]
-                        });
-
-                        const marker = L.marker([wc.緯度, wc.經度], { icon: icon })
-                            .bindPopup(popupContent);
-                        
-                        markers.addLayer(marker);
-                    }
-                });
-                map.addLayer(markers);
-            })
-            .catch(console.error);
     </script>
 </body>
 

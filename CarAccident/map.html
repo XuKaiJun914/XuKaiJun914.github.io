@@ -108,17 +108,17 @@
                     });
             })
             .then(data => {
-                data.forEach(wc => {
-                    if (wc.經度 && wc.緯度) {
-                        let address = wc.地點[0];
-                        if (wc.地點.length > 1) {
-                            address = wc.地點.join("與") + "交叉路口";
+                data.forEach(item => {
+                    if (item.經度 && item.緯度) {
+                        let address = item.地點[0];
+                        if (item.地點.length > 1) {
+                            address = item.地點.join("與") + "交叉路口";
                         }
 
-                        const date = wc.日期 || "無資料";
-                        const time = wc.時間 || "無資料";
-                        const unit = wc.處理單位 || "無資料";
-                        const die = wc.死傷人數 || { 死亡: 0, 受傷: 0 };
+                        const date = item.日期 || "無資料";
+                        const time = item.時間 || "無資料";
+                        const unit = item.處理單位 || "無資料";
+                        const die = item.死傷人數 || { 死亡: 0, 受傷: 0 };
 
                         const popupContent = `
                             <strong>日期: ${date}</strong><br>
@@ -148,10 +148,13 @@
                             iconSize: [iconSize, iconSize]
                         });
 
-                        const marker = L.marker([wc.緯度, wc.經度], { icon: icon })
+                        const marker = L.marker([item.緯度, item.經度], { icon: icon })
                             .bindPopup(popupContent)
                             .on('click', function () {
-                                map.flyTo([wc.緯度, wc.經度], 18);
+                                map.flyTo([item.緯度, item.經度], 18, { duration: 1});
+                            })
+                            .on('popupclose', function () {
+                                map.flyTo([item.緯度, item.經度], 15, { duration: 0.5});
                             });
 
                         markers.addLayer(marker);

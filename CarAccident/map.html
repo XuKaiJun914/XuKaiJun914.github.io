@@ -70,9 +70,20 @@
 
         const markers = L.markerClusterGroup({
             iconCreateFunction: function (cluster) {
-                var size = Math.min(20 + cluster.getChildCount() * 1, 300);
+                let totalDeathsInjuries = 0;
+                cluster.getAllChildMarkers().forEach(marker => {
+                    const popupContent = marker.getPopup().getContent();
+                    const deathInjuryMatch = popupContent.match(/(\d+) 死亡, (\d+) 受傷/);
+                    if (deathInjuryMatch) {
+                        const deaths = parseInt(deathInjuryMatch[1]);
+                        const injuries = parseInt(deathInjuryMatch[2]);
+                        totalDeathsInjuries += deaths + injuries;
+                    }
+                });
+
+                var size = Math.min(20 + totalDeathsInjuries * 1, 300);
                 return new L.divIcon({
-                    html: '<div style="background-color:black; opacity: 0.5; width:' + size + 'px; height:' + size + 'px; border-radius:50%; text-align:center; line-height:' + size + 'px; color:white; font-size:12px;">' + cluster.getChildCount() + '</div>',
+                    html: '<div style="background-color:black; opacity: 0.5; width:' + size + 'px; height:' + size + 'px; border-radius:50%; text-align:center; line-height:' + size + 'px; color:white; font-size:12px;">' + totalDeathsInjuries + '</div>',
                     className: 'marker-cluster',
                     iconSize: new L.Point(size, size)
                 });
